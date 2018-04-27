@@ -18,11 +18,8 @@
             $caminho = $caminho . iconv("UTF-8", "ASCII//TRANSLIT", basename($_FILES['inputFoto']['name']));
             if (move_uploaded_file(iconv("UTF-8", "ASCII//TRANSLIT", $_FILES['inputFoto']['tmp_name']), $caminho)) {
                 $foto = iconv("UTF-8", "ASCII//TRANSLIT", basename($_FILES['inputFoto']['name']));
-            } else {
-                $fotoErro = 'É obrigatório introduzir um Ficheiro!';
             }
         }
-        //$result = iconv("UTF-8", "ASCII//TRANSLIT", $text);
         if (empty($_POST['inputEmail'])) {
             $emailErro = 'É obrigatório introduzir um Email!';
         } else {
@@ -41,30 +38,37 @@
     }
 
     if (!empty($nomeErro) || !empty($fotoErro) || !empty($emailErro) || !empty($funcaoErro) || !empty($estadoErro)){
-?>
+    ?>
         <h2>Erros:</h2>
         <ul>
             <li><?=$nomeErro;?></li>
-            <li><?=$fotoErro;?></li>
             <li><?=$emailErro;?></li>
             <li><?=$funcaoErro;?></li>
             <li><?=$estadoErro;?></li>
         </ul>
-<?php
+    <?php
     }
-    if (!empty($nome) || !empty($foto) || !empty($email) || !empty($funcao) || !empty($estado)) {
-        $sql = 'INSERT INTO utilizadores(nome, foto, email, funcao, estado) VALUES(:nome, :foto, :email, :funcao, :estado)';
+    if (!empty($nome) && empty($foto) && !empty($email) && !empty($funcao) && !empty($estado)) {
+        $sql = 'UPDATE utilizadores set nome=:nomeNovo, email=:emailNovo, funcao=:funcaoNova, estado=:estadoNovo WHERE id=:id';
         $stmt = $PDO->prepare($sql);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':foto', $foto);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':funcao', $funcao);
-        $stmt->bindParam(':estado', $estado);
+    }elseif (!empty($nome) && !empty($foto) && !empty($email) && !empty($funcao) && !empty($estado)) {
+        $sql = 'UPDATE utilizadores set nome=:nomeNovo, foto=:fotoNova, email=:emailNovo, funcao=:funcaoNova, estado=:estadoNovo WHERE id=:id';
+        $stmt = $PDO->prepare($sql);
+        $stmt->bindParam(':fotoNova', $foto);
+    }
+    if (!empty($sql)){
+        $stmt->bindParam(':nomeNovo', $nome);
+        $stmt->bindParam(':emailNovo', $email);
+        $stmt->bindParam(':funcaoNova', $funcao);
+        $stmt->bindParam(':estadoNovo', $estado);
+        $stmt->bindParam(':id', $_POST['inputId']);
         $result = $stmt->execute();
-        if (!result) {
+
+        if (!$result) {
             var_dump($stmt->errorInfo());
             exit;
         }
-        header("Location: ./insert.html");
+
+        header("Location: ./index.php");
         exit();
     }

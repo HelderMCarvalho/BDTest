@@ -10,7 +10,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>TP2</title>
+        <title>TP2 - Lista</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="./css/style.css" type="text/css">
         <link rel="stylesheet" href="./css/fontawesome-all.css" type="text/css">
@@ -37,7 +37,7 @@
                                 <td class="align-middle"><img src="./uploads/<?=$row['foto']?>" alt="Foto" class="rounded-circle" style="width: auto; height: 50px"> <?=$row['nome']?></td>
                                 <td class="align-middle"><?=$row['funcao']?></td>
                                 <td class="align-middle"><?=$row['estado']?></td>
-                                <td class="align-middle"><i class="fas fa-cog">&emsp;<i class="fas fa-trash-alt"></i></i></td>
+                                <td class="align-middle"><a href="./update.php?id=<?=$row['id']?>"><i class="fas fa-cog"></i></a>&emsp;<a href="./deleteDB.php?id=<?=$row['id']?>"><i class="fas fa-trash-alt"></i></a></td>
                             </tr>
                     <?php
                         }
