@@ -1,6 +1,6 @@
 <?php
     require_once 'db.php';
-    $sql='SELECT * FROM utilizadores';
+    $sql='SELECT utilizadores.id, utilizadores.nome, utilizadores.foto, utilizadores.email, funcao.nome AS funcao, estado.nome AS estado FROM utilizadores INNER JOIN funcao ON idFuncao=funcao.id INNER JOIN estado ON idEstado=estado.id ORDER BY utilizadores.id ASC';
     $result=$PDO->query($sql);
     $rows=$result->fetchAll();
 ?>
@@ -44,7 +44,7 @@
                     ?>
                 </tbody>
             </table>
-            <a href="insert.html" class="btn btn-dark">Inserir novo utilizador</a>
+            <a href="./insert.php" class="btn btn-dark">Inserir novo utilizador</a>
         </div>
         <script src="./js/jquery.js" type="text/javascript"></script>
         <script src="./js/bootstrap.min.js" type="text/javascript"></script>

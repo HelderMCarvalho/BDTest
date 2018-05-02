@@ -49,10 +49,10 @@
     <?php
     }
     if (!empty($nome) && empty($foto) && !empty($email) && !empty($funcao) && !empty($estado)) {
-        $sql = 'UPDATE utilizadores set nome=:nomeNovo, email=:emailNovo, funcao=:funcaoNova, estado=:estadoNovo WHERE id=:id';
+        $sql = 'UPDATE utilizadores set nome=:nomeNovo, email=:emailNovo, idFuncao=:funcaoNova, idEstado=:estadoNovo WHERE id=:id';
         $stmt = $PDO->prepare($sql);
     }elseif (!empty($nome) && !empty($foto) && !empty($email) && !empty($funcao) && !empty($estado)) {
-        $sql = 'UPDATE utilizadores set nome=:nomeNovo, foto=:fotoNova, email=:emailNovo, funcao=:funcaoNova, estado=:estadoNovo WHERE id=:id';
+        $sql = 'UPDATE utilizadores set nome=:nomeNovo, foto=:fotoNova, email=:emailNovo, idFuncao=:funcaoNova, idEstado=:estadoNovo WHERE id=:id';
         $stmt = $PDO->prepare($sql);
         $stmt->bindParam(':fotoNova', $foto);
     }

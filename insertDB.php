@@ -52,7 +52,7 @@
 <?php
     }
     if (!empty($nome) && !empty($foto) && !empty($email) && !empty($funcao) && !empty($estado)) {
-        $sql = 'INSERT INTO utilizadores(nome, foto, email, funcao, estado) VALUES(:nome, :foto, :email, :funcao, :estado)';
+        $sql = 'INSERT INTO utilizadores(nome, foto, email, idFuncao, idEstado) VALUES(:nome, :foto, :email, :funcao, :estado)';
         $stmt = $PDO->prepare($sql);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':foto', $foto);

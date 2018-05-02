@@ -3,6 +3,12 @@
     $sql='SELECT * FROM utilizadores WHERE id='.$_REQUEST['id'];
     $result=$PDO->query($sql);
     $rows=$result->fetchAll();
+    $sql='SELECT * FROM funcao';
+    $result=$PDO->query($sql);
+    $rowsFuncao=$result->fetchAll();
+    $sql='SELECT * FROM estado';
+    $result=$PDO->query($sql);
+    $rowsEstado=$result->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -46,11 +52,14 @@
                     <div class="form-group col-md-6">
                         <label for="inputFuncao">Função:</label>
                         <select class="form-control" id="inputFuncao" name="inputFuncao" aria-describedby="Função" required>
-                            <option></option>
-                            <option <?if(reset($rows)['funcao']=='Admin'){echo 'selected';}?>>Admin</option>
-                            <option <?if(reset($rows)['funcao']=='Editor'){echo 'selected';}?>>Editor</option>
-                            <option <?if(reset($rows)['funcao']=='Crítico'){echo 'selected';}?>>Crítico</option>
-                            <option <?if(reset($rows)['funcao']=='Moderador'){echo 'selected';}?>>Moderador</option>
+                            <?php
+                                foreach ($rowsFuncao as $rowFuncao){
+                                    $html='<option';
+                                    if (reset($rows)['idFuncao']==$rowFuncao['id']){$html.=' selected';}
+                                    $html.=' value="'.$rowFuncao['id'].'">'.$rowFuncao['nome'].'</option>';
+                                    echo $html;
+                                }
+                            ?>
                         </select>
                         <div class="invalid-feedback">
                             Por favor introduza a sua Função.
@@ -59,10 +68,14 @@
                     <div class="form-group col-md-6">
                         <label for="inputEstado">Estado:</label>
                         <select class="form-control" id="inputEstado" name="inputEstado" aria-describedby="Estado" required>
-                            <option></option>
-                            <option <?if(reset($rows)['estado']=='Ativo'){echo 'selected';}?>>Ativo</option>
-                            <option <?if(reset($rows)['estado']=='Suspenso'){echo 'selected';}?>>Suspenso</option>
-                            <option <?if(reset($rows)['estado']=='Inativo'){echo 'selected';}?>>Inativo</option>
+                            <?php
+                                foreach ($rowsEstado as $rowEstado){
+                                    $html='<option';
+                                    if (reset($rows)['idEstado']==$rowEstado['id']){$html.=' selected';}
+                                    $html.=' value="'.$rowEstado['id'].'">'.$rowEstado['nome'].'</option>';
+                                    echo $html;
+                                }
+                            ?>
                         </select>
                         <div class="invalid-feedback">
                             Por favor introduza o seu Estado.

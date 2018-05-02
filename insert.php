@@ -1,3 +1,12 @@
+<?php
+    require_once 'db.php';
+    $sql='SELECT * FROM funcao';
+    $result=$PDO->query($sql);
+    $rowsFuncao=$result->fetchAll();
+    $sql='SELECT * FROM estado';
+    $result=$PDO->query($sql);
+    $rowsEstado=$result->fetchAll();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,10 +48,11 @@
                         <label for="inputFuncao">Função:</label>
                         <select class="form-control" id="inputFuncao" name="inputFuncao" aria-describedby="Função" required>
                             <option></option>
-                            <option>Admin</option>
-                            <option>Editor</option>
-                            <option>Crítico</option>
-                            <option>Moderador</option>
+                            <?php
+                                foreach ($rowsFuncao as $rowFuncao){
+                                    echo '<option value="'.$rowFuncao['id'].'">'.$rowFuncao['nome'].'</option>';
+                                }
+                            ?>
                         </select>
                         <div class="invalid-feedback">
                             Por favor introduza a sua Função.
@@ -52,9 +62,11 @@
                         <label for="inputEstado">Estado:</label>
                         <select class="form-control" id="inputEstado" name="inputEstado" aria-describedby="Estado" required>
                             <option></option>
-                            <option>Ativo</option>
-                            <option>Suspenso</option>
-                            <option>Inativo</option>
+                            <?php
+                                foreach ($rowsEstado as $rowEstado){
+                                    echo '<option value="'.$rowEstado['id'].'">'.$rowEstado['nome'].'</option>';
+                                }
+                            ?>
                         </select>
                         <div class="invalid-feedback">
                             Por favor introduza o seu Estado.
